@@ -20,7 +20,8 @@ class RoomController extends Controller
             $current_players = $room->player_id;
             $current_players = unserialize($current_players);
             $player_count = count($current_players);
-            return view('waiting')->with('id_room', $room->id)->with('player_count', $player_count);
+            return view('waiting')->with('id_room', $room->id)->with('player_count', $player_count)
+            ->with('master_id', $room->master_id);
         }
         else if($room->status == 1){
             $kumpulan_soal = $this->getAllSoalForRoom($room);
@@ -52,9 +53,9 @@ class RoomController extends Controller
         $room->kode = $id_room;
         $room->player_id = serialize(array());
         $room->save();
-        
+        $request->session()->put('user_id', $user->id);
         return redirect()->route('soal', $room->kode)->with([
-            'id_room' => $room->kode
+            'id_room' => $room->kode,
         ]);
     }
 
@@ -92,6 +93,7 @@ class RoomController extends Controller
         //broadcast
         broadcast(new RoomStart($room))->toOthers();
         $room->save();
+        return redirect()->route('room.scoreboard', ['id_room' => $id_room]);
     }
 
     public function scoreboard($id_room){
@@ -140,6 +142,7 @@ class RoomController extends Controller
         $jawaban_benar = $jawaban[$soal->jawaban];
         $score = 0;
         $benar = 0;
+
         if($request->jawaban == $jawaban_benar){
             $remaining_time = 15 - $request->elapsed_time;
             $percentage = $remaining_time/15;
@@ -155,6 +158,8 @@ class RoomController extends Controller
             $skor->skor_user = 0;
         }
         $skor->skor_user = $skor->skor_user + $score;
+        $skor->save();
+        broadcast(new ScoreboardUpdate($skor))->toOthers();
         return $benar;
     }
 

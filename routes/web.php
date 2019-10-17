@@ -40,7 +40,7 @@ Route::prefix('/room')->group(function () {
         Route::get('/scoreboard', 'RoomController@scoreboard')->name('room.scoreboard');
         Route::get('/scoreboard/data', 'RoomController@scoreboard_data')->name('room.scoreboard.data');
         Route::post('/submit', 'RoomController@submit')->name('room.submit');
-        Route::post('/start', 'RooomController@start')->name('room.start');
+        Route::post('/start', 'RoomController@start')->name('room.start');
     });
 });
 

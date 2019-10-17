@@ -285,7 +285,7 @@
             }
             console.log(paket_ids)
             $.ajax({
-                url: 'http://localhost:8080/recommendation',
+                url: 'http://10.151.33.36:8080/recommendation',
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',

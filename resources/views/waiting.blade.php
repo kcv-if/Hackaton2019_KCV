@@ -175,13 +175,16 @@
                 </div>    
 
             </div>
-            
-            <div class="button-play" onclick="location.href='{{url('/play')}}';">
-                <button class="button">
-                    <span>Play Now</span>
-                </button>
-            </div>
-        
+            @if ($master_id == session('user_id'))
+                <form action={{url()->current().'/start'}} method='POST'>
+                    @csrf
+                    <div class="button-play">
+                        <button class="button">
+                            <span>Play Now</span>
+                        </button>
+                    </div>
+                </form>
+            @endif
         </div>
     </div>
 @endsection
@@ -210,9 +213,12 @@
             temp = temp.join('/');
             document.querySelector('.num-player').firstElementChild.src = temp;
         });
-        channel.bind('room.start', function (data) {
-            console.log(data);
-            location.reload(true);
-        });
+        
+        if ({{ $master_id }} != {{ session('user_id') }}){
+            channel.bind('room.start', function (data) {
+                console.log(data);
+                location.reload(true);
+            });
+        }
     </script>
 @endsection

@@ -66,7 +66,7 @@
             cluster: 'ap1',
             forceTLS: false
         });
-
+        setTimeout("location.reload(true);", 2000);
         var channel = pusher.subscribe('rooms.{{ $id_room }}');
         channel.bind('scoreboard.update', function(data) {
             location.reload(true);
