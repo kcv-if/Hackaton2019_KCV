@@ -45,6 +45,12 @@ class RoomController extends Controller
         $user->username = $user->id.'_'.'master';
         $user->save();
 
+        if(!$request->kode) {
+            do {
+                $request->kode = $this->generateRandomString(5);
+            } while(Room::all()->where('kode', $request->kode)->first());
+        }
+        
         $id_room = $user->id.'_'.$request->kode;
         $room = new Room();
         $room->paket_id = implode('|', array());
