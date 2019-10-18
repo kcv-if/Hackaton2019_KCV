@@ -66,7 +66,7 @@
         }
 
         var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
-            cluster: "{{env('PUSHER_APP_CLUSTER')}",
+            cluster: "{{env('PUSHER_APP_CLUSTER')}}",
             forceTLS: false
         });
         setTimeout("location.reload(true);", 2000);

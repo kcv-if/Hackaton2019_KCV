@@ -141,6 +141,7 @@
 @section('body')
     <div class="main">
         <div class="container text-center">
+            <h3><b>Kode room: {{$kode_room}}</b></h3>
             <div class="num-player">
                 <img src="{{URL::asset('/images/'.$player_count.'.png')}}" />
             </div>
@@ -199,7 +200,7 @@
         }
 
         var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
-            cluster: "{{env('PUSHER_APP_CLUSTER')}",
+            cluster: "{{env('PUSHER_APP_CLUSTER')}}",
             forceTLS: false
         });
 

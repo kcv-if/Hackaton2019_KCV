@@ -21,7 +21,7 @@ class RoomController extends Controller
             $current_players = unserialize($current_players);
             $player_count = count($current_players);
             return view('waiting')->with('id_room', $room->id)->with('player_count', $player_count)
-            ->with('master_id', $room->master_id);
+            ->with('master_id', $room->master_id)->with('kode_room', $room->kode);
         }
         else if($room->status == 1){
             $kumpulan_soal = $this->getAllSoalForRoom($room);
@@ -50,7 +50,7 @@ class RoomController extends Controller
                 $request->kode = $this->generateRandomString(5);
             } while(Room::all()->where('kode', $request->kode)->first());
         }
-        
+
         $id_room = $user->id.'_'.$request->kode;
         $room = new Room();
         $room->paket_id = implode('|', array());
