@@ -8,7 +8,7 @@
             background: url('/images/bg3.jpg');
             background-size:     cover;
             background-repeat:   no-repeat;
-            background-position: center center;   
+            background-position: center center;
         }
 
         .main {
@@ -38,7 +38,7 @@
             border-radius:100px;
             z-index:1
         }
-        
+
         .intro-banner-vdo-play-btn .ripple{
             position:absolute;
             width:80px;
@@ -122,7 +122,7 @@
                     transform: translate(-50%, -50%);
             transition: width .2s ease, height .2s ease;
         }
-            
+
         .button-play .button:hover::before {
             --size: 600px;
         }
@@ -130,9 +130,9 @@
         .button-play {
             margin-top: 40px;
         }
-        
+
         .button-play button {
-            
+
         }
 
     </style>
@@ -144,7 +144,7 @@
             <div class="num-player">
                 <img src="{{URL::asset('/images/'.$player_count.'.png')}}" />
             </div>
-            
+
             <div class="row dot">
 
                 <div class="col-md-4">
@@ -172,7 +172,7 @@
                         <span class="ripple pinkBg"></span>
                         <span class="ripple pinkBg"></span>
                     </div>
-                </div>    
+                </div>
 
             </div>
             @if ($master_id == session('user_id'))
@@ -196,7 +196,7 @@
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
-        var pusher = new Pusher('9abbb80c69bc249bdc14', {
+        var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
             cluster: 'ap1',
             forceTLS: false
         });
@@ -213,7 +213,7 @@
             temp = temp.join('/');
             document.querySelector('.num-player').firstElementChild.src = temp;
         });
-        
+
         if ({{ $master_id }} != {{ session('user_id') }}){
             channel.bind('room.start', function (data) {
                 console.log(data);

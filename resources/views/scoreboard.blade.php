@@ -9,7 +9,7 @@
             background: url('/images/bg6.jpg');
             background-size:     cover;
             background-repeat:   no-repeat;
-            background-position: center center;   
+            background-position: center center;
         }
 
         .main {
@@ -49,7 +49,7 @@
                 </table>
             </div>
         </div>
-    
+
     </div>
 
 
@@ -62,7 +62,7 @@
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
-        var pusher = new Pusher('9abbb80c69bc249bdc14', {
+        var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
             cluster: 'ap1',
             forceTLS: false
         });
