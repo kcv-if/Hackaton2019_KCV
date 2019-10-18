@@ -191,6 +191,7 @@
     <div class="main">
         
         <div class="container text-center">
+        <h3><b>{{$id_room}}</b></h3>
         <h1><b>Pilih Paket Soal</b></h1>
         <form method="POST" action="{{ route('soal.add', $id_room)}}" id="pilih-soal">
             @csrf

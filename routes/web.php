@@ -31,8 +31,10 @@ Route::get('/scoreboard', function () {
 })->name('scoreboard');
 
 Route::prefix('/room')->group(function () {
-    Route::get('/create', 'RoomController@create')->name('room.create');
-    Route::post('/create', 'RoomController@store')->name('room.store');
+    Route::prefix('/master')->group(function () {
+        Route::get('/create', 'RoomController@create')->name('room.create');
+        Route::post('/create', 'RoomController@store')->name('room.store');
+    });
     Route::prefix('/{id_room}')->group(function () {
         Route::get('/', 'RoomController@index')->name('room');
         Route::get('/soal', 'RoomController@soal')->name('soal');

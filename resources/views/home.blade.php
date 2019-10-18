@@ -132,11 +132,11 @@
         <div class="container text-center">
             <h1 class="ml2">KCVintar</h1>
             <div class="button-play-group">
-                <div class="button-play-master">
+                {{-- <div class="button-play-master">
                     <button class="button" onclick="location.href='{{url('/room/create')}}';">
                         <span>Master</span>
                     </button>
-                </div>
+                </div> --}}
                 <div class="button-play-join" onclick="location.href='{{url('/user/create')}}';">
                     <button class="button">
                         <span>Join Room</span>
