@@ -1,5 +1,5 @@
 import re
-
+import os
 import numpy as np
 import phpserialize
 from flask import Flask, current_app, jsonify, make_response, request, current_app
@@ -9,7 +9,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from spacy.lang.id import Indonesian
+from dotenv import load_dotenv
 
+load_dotenv('../.env')
 
 class TextPreprocessor:
     def __init__(self):
@@ -20,7 +22,7 @@ class TextPreprocessor:
 
     def remove_non_alphabet(self, text: str) -> str:
         text = re.sub('[^a-zA-Z]', ' ', text)
-        text = re.sub('\s{2,}', ' ', text)
+        text = re.sub(r'\s{2,}', ' ', text)
         return text
 
     def lemmatize(self, text: str) -> str:
@@ -38,7 +40,7 @@ class TextPreprocessor:
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@10.151.33.36/hackaton'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -85,6 +87,11 @@ soals_schema = SoalSchema(many=True)
 
 processor = TextPreprocessor()
 
+def convert(data):
+    if isinstance(data, bytes):  return data.decode('utf-8')
+    if isinstance(data, dict):   return dict(map(convert, data.items()))
+    if isinstance(data, tuple):  return map(convert, data)
+    return data
 
 def get_docs_labels():
     pakets = Paket.query.all()
@@ -92,13 +99,14 @@ def get_docs_labels():
     docs = []
     labels = []
     names = []
-    for paket in pakets.data:
+    for paket in pakets:
         doc_paket = []
         soals = Soal.query.filter_by(paket_id=paket['id'])
         soals = soals_schema.dump(soals)
-        for soal in soals.data:
+        for soal in soals:
             soal['pilihan'] = phpserialize.loads(
-                soal['pilihan'].encode('utf-8'), decode_strings=True)
+                soal['pilihan'].encode('utf-8'))
+            soal['pilihan'] = convert(soal['pilihan'])
             text = [soal['soal']]
             text.extend(list(soal['pilihan'].values()))
             text = ' '.join(text)
@@ -125,7 +133,7 @@ def soals_by_paket(paket_id):
     soals = Soal.query.filter_by(paket_id=paket_id)
     soals = soals_schema.dump(soals)
     doc_paket = []
-    for soal in soals.data:
+    for soal in soals:
         soal['pilihan'] = phpserialize.loads(soal['pilihan'].encode('utf-8'), decode_strings=True)
         text = [soal['soal']]
         text.extend(list(soal['pilihan'].values()))
@@ -182,4 +190,4 @@ def recomm():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8080, use_reloader=False)
