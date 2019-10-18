@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\RoomStart;
+use App\Events\ScoreboardUpdate;
 use Illuminate\Http\Request;
 use App\Room;
 use App\User;

@@ -28,6 +28,11 @@ class ScoreboardUpdate implements ShouldBroadcast
         $this->skor = $skor;
     }
 
+    public function broadcastAs()
+    {
+        return 'scoreboard.update';
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *

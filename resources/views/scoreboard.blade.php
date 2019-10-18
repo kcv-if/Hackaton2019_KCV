@@ -69,9 +69,10 @@
             cluster: "{{env('PUSHER_APP_CLUSTER')}}",
             forceTLS: false
         });
-        setTimeout("location.reload(true);", 2000);
+        // setTimeout("location.reload(true);", 2000);
         var channel = pusher.subscribe('rooms.{{ $id_room }}');
         channel.bind('scoreboard.update', function(data) {
+            console.log(data);
             // location.reload(true);
             $.ajax({
                 type:'GET',
@@ -90,7 +91,7 @@
                         temp += '</span></h2></td></tr>';
                         baru += temp;
                     }
-                    $('tbody').innerHTML(baru);
+                    $('tbody')[0].innerHTML = baru;
                 }
             });
         });
