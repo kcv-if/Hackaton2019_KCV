@@ -52,4 +52,4 @@ class ScoreboardUpdate implements ShouldBroadcast
 // //        return $scoreboard;
 //         return ['scoreboard' => 'scoreboard'];
 //     }
-// }
+}

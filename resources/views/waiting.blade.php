@@ -193,25 +193,47 @@
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <script>
 
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        if ({{env('APP_DEBUG')}}){
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+        }
 
         var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
-            cluster: 'ap1',
+            cluster: "{{env('PUSHER_APP_CLUSTER')}",
             forceTLS: false
         });
 
         var channel = pusher.subscribe('rooms.{{ $id_room }}');
         channel.bind('user.join', function(data) {
             console.log(data.count);
-            let imgSrc = document.querySelector('.num-player').firstElementChild.src;
+            let numPlayerNode = document.querySelector('.num-player');
+            let imgSrc = numPlayerNode.firstElementChild.src;
             let temp = imgSrc.split('/');
-            let imgName = temp[temp.length - 1].split('.');
-            imgName[0] = String(data.count);
-            imgName = imgName.join('.');
-            temp[temp.length - 1] = imgName;
-            temp = temp.join('/');
-            document.querySelector('.num-player').firstElementChild.src = temp;
+
+            let count = data.count;
+            let imageNames = [];
+            while (count){
+                let digit = count % 10;
+                count = count / 10 >> 0; //integer division
+                imageNames.push(digit);
+            }
+
+            while (numPlayerNode.firstChild) {
+                numPlayerNode.removeChild(numPlayerNode.firstChild);
+            }
+            imageNames = imageNames.slice(0).reverse();
+            for (const digit of imageNames) {
+                let imagePath = temp.slice()
+                let imgName = imagePath[imagePath.length - 1].split('.');
+                imgName[0] = String(digit);
+                imgName = imgName.join('.');
+                imagePath[imagePath.length - 1] = imgName;
+                imagePath = imagePath.join('/');
+                let imgNode = document.createElement("img")
+                imgNode.src = imagePath;
+
+                numPlayerNode.appendChild(imgNode);
+            }
         });
 
         if ({{ $master_id }} != {{ session('user_id') }}){
