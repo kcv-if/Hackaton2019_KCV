@@ -31,10 +31,8 @@ Route::get('/scoreboard', function () {
 })->name('scoreboard');
 
 Route::prefix('/room')->group(function () {
-    Route::prefix('/master')->group(function () {
-        Route::get('/create', 'RoomController@create')->name('room.create');
-        Route::post('/create', 'RoomController@store')->name('room.store');
-    });
+    Route::get('/create', 'RoomController@create')->name('room.create');
+    Route::post('/create', 'RoomController@store')->name('room.store');
     Route::prefix('/{id_room}')->group(function () {
         Route::get('/', 'RoomController@index')->name('room');
         Route::get('/soal', 'RoomController@soal')->name('soal');
@@ -44,6 +42,10 @@ Route::prefix('/room')->group(function () {
         Route::post('/submit', 'RoomController@submit')->name('room.submit');
         Route::post('/start', 'RoomController@start')->name('room.start');
     });
+});
+
+Route::get('/master', function () {
+    return view('master_view');
 });
 
 Route::prefix('/user')->group(function() {
