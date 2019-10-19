@@ -47,9 +47,7 @@ class RoomController extends Controller
         $user->save();
 
         if(!$request->kode) {
-            do {
-                $request->kode = $this->generateRandomString(5);
-            } while(Room::all()->where('kode', $request->kode)->first());
+            $request->kode = $this->generateRandomString(5);
         }
 
         $id_room = $user->id.'_'.$request->kode;
