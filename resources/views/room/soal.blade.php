@@ -263,6 +263,7 @@
 
 @section('js')
     <script>
+        link = '{{env("API_ENDPOINT")}}'
         function pilih_juga() {
             event.preventDefault();
             let val = event.path[0].value;
@@ -286,7 +287,7 @@
             }
             console.log(paket_ids)
             $.ajax({
-                url: 'http://10.151.33.36:8080/recommendation',
+                url: link,
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
