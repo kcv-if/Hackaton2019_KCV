@@ -138,6 +138,11 @@ class RoomController extends Controller
     }
 
     public function submit(Request $request){
+        $user_id = $request->user_id;
+        $user = User::find($user_id);
+        if ($user->finish){
+            return response()->json(['message' => 'Has finished'], 400);
+        }
         $jawaban = new Jawaban();
         $jawaban->soal_id = $request->soal_id;
         $jawaban->user_id = $request->user_id;
