@@ -301,7 +301,7 @@
                     for (let index = 1; index <= recommendationBox.length; index++) {
                         let id = 'rekom'+index
                         $('#'+id).val(index)
-                        $("label[for='"+id+"']").text(`Rekom {$index}`)
+                        $("label[for='"+id+"']").text(`Rekom ${index}`)
                     }
                     for (let index = 1; index <= data.length; index++) {
                         // console.log(data[index-1])
