@@ -163,7 +163,7 @@ class RoomController extends Controller
         $score = 0;
         $benar = 0;
 
-        if($request->jawaban == $jawaban_benar){
+        if(trim($request->jawaban) == trim($jawaban_benar)){
             $remaining_time = 15 - $request->elapsed_time;
             $percentage = $remaining_time/15;
             $score = 100 * $percentage;
