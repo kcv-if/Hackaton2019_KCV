@@ -18,6 +18,10 @@ class UserController extends Controller
         try {
             $room = Room::all()->where('kode', $request->kode_room)->first();
 
+            if ($room->status == 1){
+                return redirect()->back()->with('error', 'Room sudah dimulai');
+            }
+
             $user = new User();
             $user->username = $request->username;
             $user->save();
@@ -25,19 +29,19 @@ class UserController extends Controller
             array_push($current_player, $user->id);
             $room->player_id = serialize($current_player);
             $room->save();
-            
+
             //broadcast
             broadcast(new UserJoin($room))->toOthers();
             $request->session()->put('user_id', $user->id);
             return redirect()->route('room', ['id_room' => $room->kode]);
-            
+
         }catch(\Exception $e) {
             $eMessage = 'error: ' . $e->getMessage();
             Log::emergency($eMessage);
             return redirect()->back()->with('error', 'Terjadi kesalahan, ID Room tidak ditemukan!');
         }
-        
+
     }
 
-    
+
 }
