@@ -10,7 +10,7 @@
             background: url('/images/bg5.jpg');
             background-size:     cover;
             background-repeat:   no-repeat;
-            background-position: center center;   
+            background-position: center center;
         }
 
         .main {
@@ -92,7 +92,7 @@
         .jawaban.clicked p{
             background-color: #FFF7A5;
         }
-        
+
         #kotak-time-bar {
             position: absolute;
             top: 0;
@@ -163,7 +163,7 @@
                     <input type="hidden" name="elapsed_time" value="5">
                     <input type="hidden" name="id_room" value={{$id_room}}>
                     <input type="hidden" name="jawaban" value="0">
-                    
+
                     <div class="kotak-soal-3 d-none" id="soal_{{$soal['soal_id']}}">
                         <div class="soal">
                             <p><b>{{$soal['soal']}}</b></p>
@@ -174,7 +174,7 @@
                                 <p>{{$soal['jawaban'][0]}}</p>
                             </div>
                             <div class="jawaban" onclick="submit_form({{$soal['soal_id']}})">
-                                <p>{{$soal['jawaban'][1]}}</p> 
+                                <p>{{$soal['jawaban'][1]}}</p>
                             </div>
                             <div class="jawaban" onclick="submit_form({{$soal['soal_id']}})">
                                 <p>{{$soal['jawaban'][2]}}</p>
@@ -183,7 +183,7 @@
                                 <p>{{$soal['jawaban'][3]}}</p>
                             </div>
                         </div>
-                
+
                     </div>
 
 
@@ -191,10 +191,10 @@
                 </form>
                 @endforeach
 
-                
+
                 </div>
             </div>
-        
+
 
     </div>
 
@@ -213,12 +213,12 @@
 
         <?php $number = count($kumpulan_soal); ?>
         var number = {{$number}}
-        var numb = {{$number}}        
+        var numb = {{$number}}
         var flag = 0;
 
         function submit_form(val) {
             //console.log(event);
-            
+
             if(!flag){
                 $(event.path[1]).addClass('clicked');
                 flag = 1;
@@ -230,7 +230,7 @@
                 var id_room =  $("#form_"+val+" input[name=id_room]").val();
 
                 console.log('/room/'+id_room+'/submit')
-        
+
                 $.ajax({
                     type:'POST',
                     url:'/room/'+id_room+'/submit',
@@ -247,31 +247,42 @@
 
         function progress(timeleft, timetotal, $element) {
             var progressBarWidth = timeleft * $element.width() / timetotal;
-            
-             
-            
+
+
+
             $('#kotak-time-bar div').animate(
-                { width: progressBarWidth + 'px'}, 
+                { width: progressBarWidth + 'px'},
                 timeleft == timetotal ? 0 : 1000, 'linear');
             if(timeleft > 0) {
-                
+
                 setTimeout(function() {
                     progress(timeleft - 1, timetotal, $element);
                 }, 1000);
-                
+
             } else {
                 number--;
                 if(number > 0){
                     progress(15, 15, $('#kotak-time-bar'));
-                    
+
                     flag = 0;
                     $(".kotak-soal-3").addClass("d-none");
                     temp = document.getElementsByClassName('kotak-soal-3')[numb - number]
                     $(temp).removeClass("d-none");
                 }
                 else{
-                    var id_rom = $("input[name=id_room]")[0].value;
-                    window.location.href = id_rom +"/scoreboard";
+                    let user_id =  $("input[name=user_id]")[0].value;
+                    let id_room =  $("input[name=id_room]")[0].value;
+                    $.ajax({
+                        type:'POST',
+                        url:'/room/'+id_room+'/finish',
+                        data:{user_id:user_id},
+                        success:function(data){
+                            console.log("finish playing");
+                            console.log(data);
+                            let id_rom = $("input[name=id_room]")[0].value;
+                            window.location.href = id_rom +"/scoreboard";
+                        }
+                    });
                 }
             }
         };

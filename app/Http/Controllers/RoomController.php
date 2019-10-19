@@ -15,7 +15,7 @@ use function Opis\Closure\unserialize;
 
 class RoomController extends Controller
 {
-    public  function  index($id_room){
+    public  function  index(Request $request, $id_room){
         $room = Room::all()->where('kode', $id_room)->first();
         if($room->status == 0){
             $current_players = $room->player_id;
@@ -25,6 +25,13 @@ class RoomController extends Controller
             ->with('master_id', $room->master_id)->with('kode_room', $room->kode);
         }
         else if($room->status == 1){
+            $user_id = $request->session()->get('user_id', null);
+            if ($user_id){
+                $user = User::find($user_id);
+                if ($user->finish){
+                    return redirect()->route('room.scoreboard', ['id_room' => $id_room]);
+                }
+            }
             $kumpulan_soal = $this->getAllSoalForRoom($room);
             return view('room.room', compact('kumpulan_soal'))->with([
                 'id_room' => $id_room
@@ -139,6 +146,14 @@ class RoomController extends Controller
         $benar = $this->updateScoreBoard($request);
         //broadcast
         return $benar;
+    }
+
+    public function userFinish(Request $request){
+        $user_id = $request->user_id;
+        $user = User::findOrFail($user_id);
+        $user->finish = true;
+        $user->save();
+        return "finish";
     }
 
     private function updateScoreBoard($request){
