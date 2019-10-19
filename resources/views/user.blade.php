@@ -20,6 +20,10 @@
         .main .container {
             width: 50%;
         }
+        
+        .form-group {
+            margin-bottom: auto !important;
+        }
 
         .button-create .button {
             position: relative;
@@ -27,7 +31,7 @@
             -moz-appearance: none;
             appearance: none;
             background: #FF4818;
-            padding: 1em 2em;
+            padding: 1em 2.5em;
             border: none;
             color: white;
             font-size: 1.2em;
@@ -67,22 +71,36 @@
         .container .form-group label{
             margin-top: 10px;
         }
+
+        @media (max-width: 768px) {
+            .button-create .button {
+                padding: 0.4em 1.5em;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
+            label {
+                margin-bottom: auto;
+            }
+        }
     </style>
 @endsection
 @section('body')
     <div class="main">
         <div class="container text-center">
-
-            <form method="POST" action="{{ route('user.create') }}"><form>
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{ Session::get('error') }}
+                </div>
+            @endif
+            <form method="POST" action="{{ route('user.create') }}">
                 @csrf
                 <div class="form-group">
                     <label for="username"><h3>Username:</h3></label>
-                    <input class="form-control form-control-lg" type="text" name="username">
-
-                    <!-- <h1><b>Hello, Username!</b></h1> -->
-
+                    <input class="form-control form-control-lg form-control-sm" type="text" name="username" required>
+                    
                     <label for="kode_room"><h3>Kode Room:</h3></label>
-                    <input class="form-control form-control-lg" type="text" name="kode_room">
+                    <input class="form-control form-control-lg" type="text" name="kode_room" required>
                     
                     <div class="button-create">
                         <button class="button" type="submit" value="submit">

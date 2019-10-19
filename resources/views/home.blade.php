@@ -28,6 +28,11 @@
             line-height: 1em;
         }
 
+        @media (max-width: 768px) {
+            .ml2 {
+                font-size: 65px; 
+            }
+        }
 
         .button-play-master .button {
             position: relative;
@@ -35,7 +40,7 @@
             -moz-appearance: none;
             appearance: none;
             background: #FF4818;
-            padding: 1em 2em;
+            padding: 1.2em 2em;
             border: none;
             color: white;
             font-size: 1.2em;
@@ -67,7 +72,6 @@
         .button-play-master .button:hover::before {
             --size: 600px;
         }
-
 
         .button-play-join .button {
             position: relative;
@@ -119,7 +123,16 @@
             margin-right: 40px;
             margin-left: 40px;
         }
-
+        @media (max-width: 768px) {
+            .button-play-master, .button-play-join {
+                width: 30%;
+                margin-right: 15px;
+                margin-left: 15px;
+            }
+            .button-play-join .button {
+                padding: 0.3em 0.6em;
+            }
+        }
         .button-play-master button, .button-play-join button {
             width: 100%;
         }

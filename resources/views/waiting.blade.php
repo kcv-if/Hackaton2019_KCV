@@ -148,7 +148,7 @@
 
             <div class="row dot">
 
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <div class="intro-banner-vdo-play-btn pinkBg">
                             <i class="glyphicon glyphicon-play whiteText" aria-hidden="true"></i>
                         <span class="ripple pinkBg"></span>
@@ -157,7 +157,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <div class="intro-banner-vdo-play-btn pinkBg">
                             <i class="glyphicon glyphicon-play whiteText" aria-hidden="true"></i>
                         <span class="ripple pinkBg"></span>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <div class="intro-banner-vdo-play-btn pinkBg">
                             <i class="glyphicon glyphicon-play whiteText" aria-hidden="true"></i>
                         <span class="ripple pinkBg"></span>

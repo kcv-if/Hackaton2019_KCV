@@ -42,14 +42,15 @@
             height: 28vh;
             width: 94vw;
             background-color: #EAE0D4;
-            margin-bottom: 3vh;
+            margin-bottom: 3vh !important;
             left: 50%;
             margin-left: -47vw;
             border-radius: 10px;
+            overflow: auto;
         }
 
         .kotak-soal-3 .soal {
-            padding: 5px 300px 0 300px;
+            padding: 5px 200px 0 200px;
             text-align: center;
         }
 
@@ -58,12 +59,11 @@
         }
 
         .kotak-soal-3 .pilihan-jawaban {
-            padding: 0px 300px;
+            padding: 0px 30px;
             text-align: center;
             width: 100%;
             display: inline-table;
         }
-
         .pilihan-jawaban .jawaban{
             width: 50%;
             text-align: center;
@@ -113,7 +113,30 @@
             background-color: #EF4A4E;
             box-sizing: border-box;
         }
-
+        @media (max-width: 768px) {
+            .kotak-soal-1 {
+                height: 48vh;
+            }
+            .kotak-soal-2 {
+                height: 43vh;
+            }
+            .kotak-soal-3 {
+                height: 38vh;
+            }
+            .kotak-soal-3 .soal {
+                padding: 5px 10px 0 10px;
+            }
+            .pilihan-jawaban .jawaban {
+                line-height: 30px;
+                margin-bottom: 0px;
+            }
+            .kotak-soal-3 .soal p {
+                font-size: 0.85rem;
+            }
+            .jawaban p {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 @endsection
 
