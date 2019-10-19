@@ -8,7 +8,7 @@
             background: url('/images/bg3.jpg');
             background-size:     cover;
             background-repeat:   no-repeat;
-            background-position: center center;   
+            background-position: center center;
         }
 
         .main {
@@ -130,7 +130,7 @@
                     transform: translate(-50%, -50%);
             transition: width .2s ease, height .2s ease;
         }
-            
+
         .button-pilih .button:hover::before {
             --size: 600px;
         }
@@ -189,7 +189,7 @@
 
 @section('body')
     <div class="main">
-        
+
         <div class="container text-center">
         <h3><b>Kode room: {{$id_room}}</b></h3>
         <h1><b>Pilih Paket Soal</b></h1>
@@ -220,7 +220,7 @@
             <div class="recommendation-title">
                 <h5>Rekomendasi Paket Soal</h5>
             </div>
-            
+
             <div class="recommendation-box-2">
                 <ul class="ks-cboxtags">
                     <li>
@@ -229,31 +229,31 @@
                     </li>
                     <li>
                         <input type="checkbox" id="rekom2" value="1" onclick="pilih_juga();">
-                        <label for="rekom2">Rekom 1</label>
+                        <label for="rekom2">Rekom 2</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom3" value="1" onclick="pilih_juga();">
-                        <label for="rekom3">Rekom 1</label>
+                        <label for="rekom3">Rekom 3</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom4" value="1" onclick="pilih_juga();">
-                        <label for="rekom4">Rekom 1</label>
+                        <label for="rekom4">Rekom 4</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom5" value="1" onclick="pilih_juga();">
-                        <label for="rekom5">Rekom 1</label>
+                        <label for="rekom5">Rekom 5</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom6" value="1" onclick="pilih_juga();">
-                        <label for="rekom6">Rekom 1</label>
+                        <label for="rekom6">Rekom 6</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom7" value="1" onclick="pilih_juga();">
-                        <label for="rekom7">Rekom 1</label>
+                        <label for="rekom7">Rekom 7</label>
                     </li>
                     <li>
                         <input type="checkbox" id="rekom8" value="1" onclick="pilih_juga();">
-                        <label for="rekom8">Rekom 1</label>
+                        <label for="rekom8">Rekom 8</label>
                     </li>
                 </ul>
             </div>
@@ -295,6 +295,14 @@
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     console.log(data)
+
+                    // Reset recommendation box to it's original
+                    let recommendationBox = document.querySelectorAll('.recommendation-box-1 li');
+                    for (let index = 1; index <= recommendationBox.length; index++) {
+                        let id = 'rekom'+index
+                        $('#'+id).val(index)
+                        $("label[for='"+id+"']").text(`Rekom {$index}`)
+                    }
                     for (let index = 1; index <= data.length; index++) {
                         // console.log(data[index-1])
                         // console.log(data[index-1].id, data[index - 1].nama_paket)

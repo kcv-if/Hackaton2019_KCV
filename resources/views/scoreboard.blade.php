@@ -35,7 +35,8 @@
 
 @section('body')
     <div class="main">
-        <div class="container">
+        <div class="container text-center">
+            <h3><b>Leaderboard</b></h3>
             <div class="scoreboard shadow p-3 mb-5">
                 <table class="table table-sm table-borderless text-center">
                     <tbody>
