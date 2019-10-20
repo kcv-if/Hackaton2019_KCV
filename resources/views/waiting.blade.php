@@ -194,7 +194,7 @@
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <script>
 
-        if ({{env('APP_DEBUG')}}){
+        if (true){
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
         }

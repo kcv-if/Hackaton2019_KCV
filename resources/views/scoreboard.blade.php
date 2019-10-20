@@ -61,7 +61,7 @@
     <script>
         console.log('{{ url()->current() }}')
 
-        if ({{env('APP_DEBUG')}}){
+        if (true){
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
         }
